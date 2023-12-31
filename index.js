@@ -2,9 +2,10 @@ const express= require("express");
 const dotenv= require("dotenv");
 const mongoose=require('mongoose')
 const AccountModel= require('./accountModel');
+const fs= require('fs');
 dotenv.config()
 const app = express();
-const rawData=require("./MOCK_DATA")
+const rawData=fs.readFileSync("MOCK_DATA.json",'utf-8')
 const port = process.env.PORT || 3005;
 
 app.use(express.json());
@@ -63,6 +64,7 @@ app.post('/login',async(req,res,next)=>{
 app.get("/verify",(req,res,next)=>{
 try {
     const dummyData= JSON.parse(rawData)
+    console.log(dummyData)
      res.status(200).json({success: true,message:"", data :dummyData})
 } catch (error) {
     next(error);
